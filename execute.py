@@ -53,6 +53,9 @@ def generate_field_value_mapping_file(pdf_name):
     write_sorted_json_dict_file("fvmf.json", field_names)
 
 def map_values(data_file):
+    """
+    Creates a mapped json value tuples file.
+    """
     with open("fvmf.json", "r") as fmvf:
         contents = json.load(fmvf)
     with open(data_file, "r") as data_file:
@@ -66,6 +69,20 @@ def map_values(data_file):
     with open("mapped.json", "w") as fmvf:
         json.dump(contents, fmvf, indent=4)
     
+
+def populate_fdf_file(mapped_values_file, fdf_file):
+    """
+    This function uses the mapped values file to populate the fdf file so that 
+    it can be used to populate the pdf
+    """
+    with open(mapped_values_file, "r") as mapped:
+        mapped_values = json.load(mapped)
+
+    with open(fdf_file, "r") as fdf_file:
+        fdf = fdf_file.read()
+
+    
+
 if __name__ == "__main__":
     #run this then fill in values then run next line
     #enerate_field_value_mapping_file("i-129f.pdf")
