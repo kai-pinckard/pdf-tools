@@ -9,7 +9,7 @@ json.load to create a python object for easy transitioning.
 The pdftk tool is very useful  for this process the most useful commands are
 
 To create an empty fdf file:
-pdftk <PDF_FILE> <OUTPUT_FILE_NAME>
+pdftk <PDF_FILE> generate_fdf output <OUTPUT_FILE_NAME>
 
 To read a json data file:
 this package can handle this using json.load
