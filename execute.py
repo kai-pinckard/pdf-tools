@@ -27,21 +27,30 @@ def get_fields_names(fdf_file):
     return field_names
 
 
+def write_sorted_json_dict_file(file_name, keys):
+    """
+    Previously this was used but it is not in the order of the form
+      with open("fvmf.json", "w") as f:
+        json.dump(field_names_dict, f, indent=4, sort_keys=True)
+    """
+    file_data = "{\n"
+    for key in keys[:-1]:
+        file_data += "    \"" + str(key) + "\": \"\",\n"
+
+    # Handle the last line here since json does not allow a "," on the last element
+    file_data += "    \"" + str(keys[len(keys)-1]) + "\": \"\"\n"
+    file_data += "}\n"
+    with open(file_name, "w") as f:
+        f.write(file_data)
+
 def generate_field_value_mapping_file(pdf_name):
     """
     Creates a field value mapping file that can be manually filled in. This file is stored as a json dictionary.
     """
     os.system("pdftk " + pdf_name + " generate_fdf " + "output " + "fvmf.txt")
     field_names = get_fields_names("fvmf.txt")
-    field_names = get_fields_names("fvmf.txt")
-
-    field_names_dict = {}
-    for field_name in field_names:
-        field_names_dict[field_name] = ""
-
-    with open("fvmf.json", "w") as f:
-        json.dump(field_names_dict, f, indent=4)
-
+    
+    write_sorted_json_dict_file("fvmf.json", field_names)
 
 if __name__ == "__main__":
     generate_field_value_mapping_file("i-129f.pdf")
