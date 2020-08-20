@@ -52,5 +52,21 @@ def generate_field_value_mapping_file(pdf_name):
     
     write_sorted_json_dict_file("fvmf.json", field_names)
 
+def map_values(data_file):
+    with open("fvmf.json", "r") as fmvf:
+        contents = json.load(fmvf)
+    with open(data_file, "r") as data_file:
+        data = json.load(data_file)
+    
+    for field in contents.keys():
+        for attribute in data.keys():
+            if contents[field] == attribute:
+                contents[field] = data[attribute]
+    
+    with open("mapped.json", "w") as fmvf:
+        json.dump(contents, fmvf, indent=4)
+    
 if __name__ == "__main__":
-    generate_field_value_mapping_file("i-129f.pdf")
+    #run this then fill in values then run next line
+    #enerate_field_value_mapping_file("i-129f.pdf")
+    map_values("test_Data.json")
