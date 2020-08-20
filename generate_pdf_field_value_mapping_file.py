@@ -9,7 +9,8 @@ def create_pdftk_dump_data_fields_file(input_file, output_file):
         pdftk dump_data_fields command and stores the result
         in output_file.
     """
-    os.system("pdftk "+input_file+" dump_data_fields > "+ output_file)
+    os.system("pdftk " + input_file + " dump_data_fields > " + output_file)
+
 
 def create_checkbox_TF_mapping(filename):
     """

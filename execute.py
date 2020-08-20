@@ -81,9 +81,31 @@ def populate_fdf_file(mapped_values_file, fdf_file):
     with open(fdf_file, "r") as fdf_file:
         fdf = fdf_file.read()
 
+    start = 0
+    offset = len("/V (")
+    while not fdf.find("/V", start) == -1:
+        value_start = fdf.find("/V", start)
+        value_end = fdf.find("/T", value_start)
+        start = value_end
+
+        # get the name of the field we are currently replacing
+        field_end = fdf.find(")", value_end)
+        field_name = fdf[value_end + len("/V ("): field_end]
+
+        # get the replacement value
+        value = mapped_values[field_name] + ")\n"
+
+        # insert the value into the string
+        first_content = fdf[:value_start + len("/V (")]
+        last_content = fdf[value_end:]
+        fdf = first_content + str(value) + last_content
+
+    with open("test.fdf", "wb") as f:
+        f.write(fdf)
     
 
 if __name__ == "__main__":
     #run this then fill in values then run next line
-    #enerate_field_value_mapping_file("i-129f.pdf")
+    #generate_field_value_mapping_file("first.pdf")
     map_values("test_Data.json")
+    #populate_fdf_file("mapped.json", "fvmf.txt")

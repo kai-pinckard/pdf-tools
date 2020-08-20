@@ -6,7 +6,7 @@ I will create a tool for linking json data files with the
 appropriate form fields to fill. The user data will be read in with
 json.load to create a python object for easy transitioning. 
 
-The pdftk tool is very useful  for this process the most useful commands are
+The pdftk tool is very useful for this process the most useful commands are
 
 To create an empty fdf file:
 pdftk <PDF_FILE> generate_fdf output <OUTPUT_FILE_NAME>
@@ -25,6 +25,11 @@ data from a specific json file. Allowing for form filling automation.
 To fill a pdf with a properly filled in fdf file:
 
 pdftk <PDF_TO_FILL> fill_form <FDF_FILE> output <FILLED_PDF_NAME>
+
+NOTE FORM FILLING actually is working its just that fields that are not being filled in must be removed from the fdf file otherwise this will
+throw null value errors. When only the fields that are being filled in with values are present in the fdf file everything is working. Some example commands that
+were used to fill a form can be found in the commands.txt file.
+
 
 
 Note:

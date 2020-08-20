@@ -1,0 +1,132 @@
+%FDF-1.2
+%����
+1 0 obj 
+<<
+/FDF 
+<<
+/Fields [
+<<
+/Kids [
+<<
+/Kids [
+<<
+/V ()
+/T (Pt1Line6b_GivenName[0])
+>> 
+<<
+/V ()
+/T (Pt1Line8_Country[0])
+>> 
+<<
+/V /Off
+/T (Pt1Line5_Checkboxes[1])
+>> 
+<<
+/V /Off
+/T (Pt1Line8_Unit[1])
+>> 
+<<
+/V /Off
+/T (Pt1Line4_Checkboxes[0])
+>> 
+<<
+/V /Off
+/T (Pt1Line8j_Checkboxes[0])
+>> 
+<<
+/V ()
+/T (Pt1Line8_AptSteFlrNumber[0])
+>> 
+<<
+/V ()
+/T (Pt1Line8_Province[0])
+>> 
+<<
+/V ()
+/T (Pt1Line8_InCareofName[0])
+>> 
+<<
+/V ()
+/T (Pt1Line8_State[0])
+>> 
+<<
+/V ()
+/T (Pt1Line1_AlienNumber[0])
+>> 
+<<
+/V ()
+/T (Pt1Line7c_MiddleName[0])
+>> 
+<<
+/V ()
+/T (Pt1Line8_PostalCode[0])
+>> 
+<<
+/V /Off
+/T (Pt1Line5_Checkboxes[0])
+>> 
+<<
+/V ()
+/T (Pt1Line3_SSN[0])
+>> 
+<<
+/V /Off
+/T (Pt1Line8_Unit[0])
+>> 
+<<
+/V ()
+/T (Pt1Line6c_MiddleName[0])
+>> 
+<<
+/V /Off
+/T (Pt1Line4_Checkboxes[1])
+>> 
+<<
+/V ()
+/T (Pt1Line8_StreetNumberName[0])
+>> 
+<<
+/V /Off
+/T (Pt1Line8_Unit[2])
+>> 
+<<
+/V ()
+/T (Pt1Line7a_FamilyName[0])
+>> 
+<<
+/V /Off
+/T (Pt1Line8j_Checkboxes[1])
+>> 
+<<
+/V ()
+/T (Pt1Line8_CityOrTown[0])
+>> 
+<<
+/V ()
+/T (Pt1Line7b_GivenName[0])
+>> 
+<<
+/V ()
+/T (Pt1Line8_ZipCode[0])
+>> 
+<<
+/V ()
+/T (Pt1Line6a_FamilyName[0])
+>> 
+<<
+/V ()
+/T (Pt1Line2_AcctIdentifier[0])
+>>]
+/T (#subform[0])
+>>]
+/T (form1[0])
+>>]
+>>
+>>
+endobj 
+trailer
+
+<<
+/Root 1 0 R
+>>
+%%EOF

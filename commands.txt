@@ -1,0 +1,50 @@
+ 2148  pdftk i129f.pdf fill_form test.fdf output filled.pdf
+ 2149  ls
+ 2150  code pdf_filler.py 
+ 2151  pdftk i-129f.pdf fill_form test.fdf output out129.pdf
+ 2152  ls
+ 2153  rm *.fdf
+ 2154  ls
+ 2155  rm fvmf.txt 
+ 2156  ls
+ 2157  python execute.py 
+ 2158  ls
+ 2159  rm fvmf.txt 
+ 2160  ls
+ 2161  rm mapped.json 
+ 2162  rm fvmf.json 
+ 2163  ls
+ 2164  python execute.py 
+ 2165  ls
+ 2166  python execute.py 
+ 2167  ls
+ 2168  code mapped.json 
+ 2169  python execute.py 
+ 2170  pdftk i-129f.pdf fill_form test.fdf output ex.pdf
+ 2171  ls
+ 2172  python generate_pdf_field_value_mapping_file.py --pdf i-129f.pdf 
+ 2173  ls
+ 2174  code .
+ 2175  code *
+ 2176  ls
+ 2177  python execute.py 
+ 2178  ls
+ 2179  code test.fdf 
+ 2180  pdftk i-129f.pdf fill_form test.fdf 
+ 2181  ls
+ 2182  pdftk i-129f.pdf fill_form test.fdf output exp.pdf
+ 2183  ls
+ 2184  xdg-open exp.pdf 
+ 2185  pdftk i-129f.pdf fill_form test.fdf output exp.pdf
+ 2186  pdftk -h
+ 2187  pdftk i-129f.pdf cat 1 output first.pdf
+ 2188  chrome first.pdf 
+ 2189  python execute.py 
+ 2190  code mapped.json 
+ 2191  ls
+ 2192  pdftk i-129f.pdf generate_fdf output first.fdf
+ 2193  ls
+ 2194  code first.fdf 
+ 2195  pdftk first.pdf generate_fdf output first.fdf
+ 2196  pdftk first.pdf fill_form first.fdf output firstfilled.pdf
+ 2197  history 50 > commands.txt
