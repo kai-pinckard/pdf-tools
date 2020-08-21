@@ -38,17 +38,21 @@ def write_sorted_json_dict_file(file_name, keys):
 
 class Field_Value_Mapping:
 
-    def __init__(self, pdf_name):
+    def __init__(self, pdf_name, fvmf=None):
         """
         Creates a field value mapping file that can be manually filled in. This file is stored as a json dictionary.
         """
-        os.system("pdftk " + pdf_name + " generate_fdf " + "output " + "fvmf.txt")
-        field_names = get_fields_names("fvmf.txt")
-        
-        write_sorted_json_dict_file("fvmf.json", field_names)
-        self.fvmf = "fvmf.json"
         self.pdf_name = pdf_name
-        os.remove("fvmf.txt")
+
+        if fvmf is None:
+            os.system("pdftk " + pdf_name + " generate_fdf " + "output " + "fvmf.txt")
+            field_names = get_fields_names("fvmf.txt")
+            
+            write_sorted_json_dict_file("fvmf.json", field_names)
+            self.fvmf = "fvmf.json"
+            os.remove("fvmf.txt")
+        else:
+            self.fvmf = fvmf
 
     def create_mapped_fdf_file(self, data_file):
         """
@@ -83,10 +87,90 @@ class Field_Value_Mapping:
                 if contents[field] == attribute:
                     contents[field] = data[attribute]
 
-        file_extension = data_file.find(".")
+        contents = self.shrink_dict_(contents)
 
-        with open(data_file[:file_extension] + "_mapped.json", "w") as fmvf:
+        file_extension = data_file.find(".")
+        mapped_values_file = data_file[:file_extension] + "_mapped.json"
+        with open(mapped_values_file, "w") as fmvf:
             json.dump(contents, fmvf, indent=4)
+
+        return mapped_values_file
+
+    def shrink_dict_(self, sparse_dict):
+        """
+        Creates a new dict that has all the keys whose corresponding values
+        are not the empty string.
+        """
+        new_dict = {}
+        for key in sparse_dict.keys():
+            if sparse_dict[key] != "":
+                print(sparse_dict[key])
+                new_dict[key] = sparse_dict[key]
+        return new_dict
+
+    def remove_empty_fdf_fields(self, fdf_file, fvmf_dict):
+        with open(fdf_file, "r") as fdf:
+            fdf_str = fdf.read()
+        field_names = get_fields_names(fdf_file)
+        for field in field_names:
+            if not field in fvmf_dict.keys():
+                #print(fdf_str)
+                #print("========================================")
+                fdf_str = self.remove_fdf_field(fdf_str, field)
+                #print(fdf_str)
+                
+        
+        print(fdf_str)
+        with open(fdf_file, "w") as fdf_f:
+            fdf_f.write(fdf_str)
+
+    def remove_fdf_field(self, fdf_str, field_name):
+        """
+        Takes the string contents of an fdf file and returns the 
+        string contents with the specified field removed.
+        """
+        index = fdf_str.find(field_name)
+        print(field_name, index)
+        if index == -1:
+            print("error field_name not found and not removed")
+        
+        # Find and the next >>
+        close_index = fdf_str.find(">>", index)
+        close_index += len(">>")
+        """
+        Consider adjusting this
+        """
+        if fdf_str[close_index] != "]":
+            close_index += 2
+
+        # Find the previous <<
+        open_index = fdf_str.rfind("<<", 0, index)
+
+        # Remove the field
+
+        if self.is_form_field(fdf_str, open_index, close_index):
+            fdf_start = fdf_str[:open_index]
+
+            fdf_end = fdf_str[close_index:]
+            print("=============")
+            print(fdf_str[open_index:close_index])
+            fdf_str = fdf_start + fdf_end
+        else:
+            print(field_name, "is not a field and was not removed")
+
+        return fdf_str
+    
+    def is_form_field(self, fdf_str, start, end):
+        """
+        This method checks if the item has more than one /T
+        This is so that subforms are not attempted to be removed like fields.
+        """
+        count = 0
+        ind = fdf_str.find("/T", start, end)
+        ind = fdf_str.find("/T", ind+1, end)
+
+        return -1 == ind
+
 
     def populate_fdf_file(self, mapped_values_file, fdf_file):
         """
@@ -96,8 +180,11 @@ class Field_Value_Mapping:
         with open(mapped_values_file, "r") as mapped:
             mapped_values = json.load(mapped)
 
-        with open(fdf_file, "r") as fdf_file:
-            fdf = fdf_file.read()
+
+        self.remove_empty_fdf_fields(fdf_file, mapped_values)
+
+        with open(fdf_file, "r") as fdf_f:
+            fdf = fdf_f.read()
 
         start = 0
         offset = len("/V (")
